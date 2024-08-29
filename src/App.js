@@ -119,12 +119,12 @@ const appendMessage = (messageData) => {
     }, 100);
   };
 
-  useEffect(() => {
-    window.addEventListener('resize', adjustChatHeight);
-    return () => {
-      window.removeEventListener('resize', adjustChatHeight);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('resize', adjustChatHeight);
+  //   return () => {
+  //     window.removeEventListener('resize', adjustChatHeight);
+  //   };
+  // }, []);
 
   useEffect(() => {
     scrollChatToBottom();
