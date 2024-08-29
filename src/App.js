@@ -99,18 +99,18 @@ const appendMessage = (messageData) => {
     }, 1000);
   };
 
-  const adjustChatHeight = () => {
-    const currentHeight = window.innerHeight;
-    if (currentHeight < initialHeight.current) {
-      const heightDifference = initialHeight.current - currentHeight;
-      inputContainerRef.current.style.bottom = `${heightDifference}px`;
-      chatContainerRef.current.style.paddingBottom = `${heightDifference + 80}px`;
-    } else {
-      inputContainerRef.current.style.bottom = '0';
-      chatContainerRef.current.style.paddingBottom = '80px';
-    }
-    scrollChatToBottom();
-  };
+  // const adjustChatHeight = () => {
+  //   const currentHeight = window.innerHeight;
+  //   if (currentHeight < initialHeight.current) {
+  //     const heightDifference = initialHeight.current - currentHeight;
+  //     inputContainerRef.current.style.bottom = `${heightDifference}px`;
+  //     chatContainerRef.current.style.paddingBottom = `${heightDifference + 80}px`;
+  //   } else {
+  //     inputContainerRef.current.style.bottom = '0';
+  //     chatContainerRef.current.style.paddingBottom = '80px';
+  //   }
+  //   scrollChatToBottom();
+  // };
 
   const scrollChatToBottom = () => {
     setTimeout(() => {
