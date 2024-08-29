@@ -17,7 +17,7 @@ function App() {
 
   const chatContainerRef = useRef(null);
   const inputContainerRef = useRef(null);
-  const initialHeight = useRef(window.innerHeight);
+  // const initialHeight = useRef(window.innerHeight);
 
   const toggleMenu = () => setMenuVisible(!isMenuVisible);
   const closeNotification = () => setNotificationVisible(false);
