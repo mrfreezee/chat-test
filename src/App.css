@@ -1,38 +1,426 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App{
   display: flex;
   flex-direction: column;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+  color: var(--text-color);
+  overflow: hidden;
+  font-size: var(--font-size);
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--button-color);
+  color: var(--text-color);
+  border-bottom: 2px solid var(--accent-color);
+  font-size: 14px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  border-radius: 0 0 calc(var(--border-radius) / 2) calc(var(--border-radius) / 2); /* Уменьшаем радиус закругления */
+}
+
+
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #333;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 14px;
+  color: #ffffff;
+  margin-right: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.username {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.user-rating {
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.notification-bar {
+  background-color: var(--notification-background);
+  color: var(--text-color);
+  padding: 10px 16px;
+  font-size: 13px;
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 16px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.notification-bar .notification-text {
+  flex: 1;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.notification-bar .close-button {
+  background-color: transparent; /* Прозрачный фон по умолчанию */
+  border: none;
+  color: var(--text-color);
+  padding: 5px 10px; 
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s ease;
+}
+
+.notification-bar .close-button:hover {
+  background-color: var(--accent-color); /* Фон появляется при наведении */
+}
+
+
+
+.menu-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  display: block;
+  position: absolute;
+  top: 40px;
+  right: 16px;
+  background-color: var(--message-background-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.menu-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background-color: var(--message-background-color);
+  color: var(--text-color);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.menu-dropdown button:hover {
+  background-color: var(--accent-color);
+}
+
+.chat-container {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: var(--background-color);
+  scroll-behavior: smooth;
+  padding-bottom: 80px;
+  transition: padding-bottom 0.3s;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: var(--border-radius);
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-hover-color);
+}
+
+.divider {
+  height: 2px;
+  background-color: var(--accent-color);
+  margin: 0 16px;
+  border-radius: var(--border-radius);
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--button-color);
+  border-top: 1px solid #333;
+  position: absolute; /* Позиция по умолчанию фиксированная */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: bottom 0.3s; /* Добавляем плавность изменения положения */
+
+}
+.system-message.warning {
+  background-color: rgb(136, 68, 68); /* Бледно-красный фон для предупреждений */
+  color: var(--text-color); /* Текст в вашем стиле */
+  padding: 10px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  margin: 10px 16px;
+  font-size: 13px;
+}
+
+
+
+.input-container-inner {
+  display: flex;
+  padding: 5px 16px 30px 16px;
+  align-items: center;
+}
+
+.input-container input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: var(--font-size);
+  background-color: var(--message-background-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: var(--border-radius);
+  margin-right: 8px;
+}
+
+.input-container input[type="text"]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.input-container button {
+  padding: 8px 12px;
+  font-size: var(--font-size);
+  background-color: #2e2e2e;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.input-container button.enabled {
+  background-color: rgb(214,214,214); /* Яркий цвет кнопки, когда поле не пустое */
+  color: rgb(39,39,39); /* Цвет текста кнопки в активном состоянии */
+  cursor: pointer;
+}
+
+.message-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.message-user2 {
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  display: flex;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 75%;
+  position: relative;
+}
+
+.message-user2 .message-body {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.message-content {
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  word-wrap: break-word;
+  word-break: break-word;
+  background-color: var(--message-background-color);
+  color: var(--text-color);
+  font-size: 13px;
+  position: relative;
+  margin-top: 5px;
+}
+
+.message-user1 .message-content {
+  background-color: var(--message-background-color);
+}
+
+.message-user2 .message-content {
+  background-color: var(--accent-color);
+  color: #ffffff;
+}
+
+.message-admin .message-content {
+  background-color: var(--message-background-color);
+  color: var(--text-color);
+}
+
+.message-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #b3b3b3;
+  margin-right: 8px;
+  margin-top: 15px;
+}
+
+.message-nickname {
+  font-size: 13px;
+  font-weight: bold;
+  color: #d1d1d1;
+  margin-bottom: 3px;
+}
+
+.message-admin .message-nickname {
+  color: var(--admin-color); /* Красный цвет для администратора */
+}
+
+.message-time {
+  font-size: 10px;
+  color: #999;
+  text-align: right;
+  margin-top: 3px;
+}
+
+/* Стили для всплывающего окна */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.modal {
+  background-color: var(--message-background-color);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  width: 320px;
+  max-width: 90%;
+  color: var(--text-color);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  position: relative;
+  transform: scale(0.7);
+  animation: scaleIn 0.3s forwards;
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 1px solid var(--accent-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.modal p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.modal .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--button-color);
+  border: none;
+  color: var(--text-color);
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal .close-button:hover {
+  background-color: var(--accent-color);
+}
+.system-message {
+  background-color: var(--system-message-color);
+  color: var(--text-color);
+  padding: 10px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  margin: 10px 16px;
+  font-size: 13px;
+}
+
+.input-container input[disabled] {
+  background-color: var(--accent-color); /* Используем акцентный цвет с пониженной насыщенностью */
+  color: var(--text-color); /* Оставляем цвет текста, чтобы был контраст */
+  cursor: not-allowed;
+  border: 1px solid var(--button-color); /* Добавляем границу, чтобы выделить поле */
+}
+
+.input-container button[disabled] {
+  background-color: var(--accent-color); /* Используем акцентный цвет с пониженной насыщенностью */
+  color: var(--text-color); /* Контрастный цвет текста */
+  cursor: not-allowed;
+  box-shadow: none; /* Убираем тень для плоского вида */
+}
+
+
+
+
+@keyframes fadeIn {
   to {
-    transform: rotate(360deg);
+      opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+      opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  to {
+      transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  to {
+      transform: scale(0.7);
   }
 }
